@@ -1,3 +1,5 @@
+// Take input fields and convert into numbers
+
 function getInputValue(givenId) {
 
     const inputField = document.getElementById(givenId);
@@ -8,6 +10,8 @@ function getInputValue(givenId) {
     return inputFieldValueNum;
 }
 
+// Take innerTexts and convert into numbers 
+
 function getInnerTextValueInNum(givenId) {
     const targetElement = document.getElementById(givenId);
     const targetElementInnerText = targetElement.innerText;
@@ -16,56 +20,57 @@ function getInnerTextValueInNum(givenId) {
     return textToNum;
 }
 
+// Total amount update function of deposit and withdraw 
 
-// Balance update function
+function totalUpdate(givenId, previousTotal, currentTx) {
+    const displayTotalAmount = document.getElementById(givenId);
+    const newTotalAmount = previousTotal + currentTx;
+    displayTotalAmount.innerText = newTotalAmount;
+}
+
+
+// Available Balance update function
 function updateBalance(givenId, currentDeposit, withdrawInput) {
-
+    const displayBalance = document.getElementById('total-balance');
     const previousBalance = getInnerTextValueInNum('total-balance');
     if (givenId == 'total-deposit') {
         const currentBalance = previousBalance + currentDeposit;
-        return currentBalance;
+        displayBalance.innerText = currentBalance;
     }
     else if (givenId == 'total-withdrawn') {
         const currentBalance = previousBalance - withdrawInput;
-        return currentBalance;
+        displayBalance.innerText = currentBalance;
     }
 }
 
+
 // Deposit portion
+
 document.getElementById('deposit-btn').addEventListener('click', function () {
 
     const currentDeposit = getInputValue('deposit-input');
-    // get current deposit
 
     const previousDeposit = getInnerTextValueInNum('total-deposit');
 
-    let totalDeposit = currentDeposit + previousDeposit;
-    const displayDeposit = document.getElementById('total-deposit');
-    displayDeposit.innerText = totalDeposit;
+    // Update Deposit Amount
+    totalUpdate('total-deposit', previousDeposit, currentDeposit);
 
     // Update Balance
-    const displayBalance = document.getElementById('total-balance');
-    const updatedBalanceAfterDeposit = updateBalance('total-deposit', currentDeposit);
-    console.log(updatedBalanceAfterDeposit);
-    displayBalance.innerText = updatedBalanceAfterDeposit;
-
+    updateBalance('total-deposit', currentDeposit);
 })
 
+
 // Withdraw Portion
+
 document.getElementById('withdraw-btn').addEventListener('click', function () {
-    const withdrawInput = getInputValue('withdraw-input');
+
+    const currentWithdraw = getInputValue('withdraw-input');
 
     const previousTotalWithdrawn = getInnerTextValueInNum('total-withdrawn');
 
-    const displayWithdrawn = document.getElementById('total-withdrawn');
+    // Update Withdrawn Amount
+    totalUpdate('total-withdrawn', previousTotalWithdrawn, currentWithdraw);
 
-    const totalWithdrawn = withdrawInput + previousTotalWithdrawn;
-
-    displayWithdrawn.innerText = totalWithdrawn;
-
-    // Update Balance
-    const displayBalance = document.getElementById('total-balance');
-    const updatedBalanceAfterWithdraw = updateBalance('total-withdrawn', null, withdrawInput);
-    displayBalance.innerText = updatedBalanceAfterWithdraw;
-
+    // Update Balance  
+    updateBalance('total-withdrawn', null, currentWithdraw);
 })
