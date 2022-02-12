@@ -5,9 +5,6 @@ function getInputValue(givenId) {
     const inputFieldValueNum = parseFloat(inputFieldValueStr);
     inputField.value = '';
 
-    // const depositInput = document.getElementById('deposit-input');
-    // const currentDepositStr = depositInput.value;
-    // depositInput.value = '';
     return inputFieldValueNum;
 }
 
@@ -15,9 +12,12 @@ function getInnerTextValueInNum(givenId) {
     const targetElement = document.getElementById(givenId);
     const targetElementInnerText = targetElement.innerText;
     const textToNum = parseFloat(targetElementInnerText);
+
     return textToNum;
 }
 
+
+// Balance update function
 function updateBalance(givenId, currentDeposit, withdrawInput) {
 
     const previousBalance = getInnerTextValueInNum('total-balance');
@@ -29,21 +29,9 @@ function updateBalance(givenId, currentDeposit, withdrawInput) {
         const currentBalance = previousBalance - withdrawInput;
         return currentBalance;
     }
-
-
-    // const targetElement = document.getElementById(givenId);
-    // const previousBalance = getInnerTextValueInNum('total-balance');
-    // if (targetElement == document.getElementById('total-deposit')) {
-    //     const currentBalance = previousBalance + currentDeposit;
-    //     return currentBalance;
-    // }
-    // else if (targetElement == document.getElementById('total-withdrawn')) {
-    //     const currentBalance = previousBalance - withdrawInput;
-    //     return currentBalance;
-    // }
 }
 
-
+// Deposit portion
 document.getElementById('deposit-btn').addEventListener('click', function () {
 
     const currentDeposit = getInputValue('deposit-input');
@@ -63,6 +51,7 @@ document.getElementById('deposit-btn').addEventListener('click', function () {
 
 })
 
+// Withdraw Portion
 document.getElementById('withdraw-btn').addEventListener('click', function () {
     const withdrawInput = getInputValue('withdraw-input');
 
